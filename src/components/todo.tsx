@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import "../todo.css"; // Import CSS for styling
+import "../todo.css";
+import MotivationalQuote from "./MotivationalQuote"; // Import the new component
 
 interface Task {
   id: number;
@@ -9,6 +10,7 @@ interface Task {
 const Todo: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [task, setTask] = useState<string>("");
+  const [triggerUpdate, setTriggerUpdate] = useState<number>(0); // State to trigger quote update
 
   const addTask = () => {
     if (!task.trim()) return;
@@ -20,15 +22,19 @@ const Todo: React.FC = () => {
 
     setTasks([...tasks, newTask]);
     setTask(""); // Clear input
+    setTriggerUpdate(triggerUpdate + 1); // Trigger quote update
   };
 
   const removeTask = (id: number) => {
     setTasks(tasks.filter((t) => t.id !== id));
+    setTriggerUpdate(triggerUpdate + 1); // Trigger quote update
   };
 
   return (
     <div className="todo-container">
       <h2>Listify - Your Task Manager 🚀</h2>
+
+      <MotivationalQuote triggerUpdate={triggerUpdate} /> {/* Display the quote component */}
 
       <div className="input-container">
         <input
