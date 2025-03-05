@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../todo.css"; // Import CSS for styling
 
 interface Task {
   id: number;
@@ -18,7 +19,7 @@ const Todo: React.FC = () => {
     };
 
     setTasks([...tasks, newTask]);
-    setTask("");
+    setTask(""); // Clear input
   };
 
   const removeTask = (id: number) => {
@@ -26,20 +27,24 @@ const Todo: React.FC = () => {
   };
 
   return (
-    <div>
-      <h2>Listify - Task Manager</h2>
-      <input
-        type="text"
-        value={task}
-        onChange={(e) => setTask(e.target.value)}
-        placeholder="Add a new task..."
-      />
-      <button onClick={addTask}>Add Task</button>
+    <div className="todo-container">
+      <h2>Listify - Your Task Manager 🚀</h2>
 
-      <ul>
+      <div className="input-container">
+        <input
+          type="text"
+          value={task}
+          onChange={(e) => setTask(e.target.value)}
+          placeholder="What's on your mind?"
+        />
+        <button onClick={addTask}>➕ Add</button>
+      </div>
+
+      <ul className="task-list">
         {tasks.map((t) => (
-          <li key={t.id}>
-            {t.text} <button onClick={() => removeTask(t.id)}>❌</button>
+          <li key={t.id} className="task-item">
+            <span>{t.text}</span>
+            <button className="delete-btn" onClick={() => removeTask(t.id)}>❌</button>
           </li>
         ))}
       </ul>
